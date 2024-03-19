@@ -25,7 +25,7 @@ public class Venue {
     return this.capacity;
   }
 
-  public Integer getHireFee(){
+  public Integer getHireFee() {
     return this.hireFee;
   }
 }

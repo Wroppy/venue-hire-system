@@ -5,8 +5,6 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 import nz.ac.auckland.se281.MessageCli;
 
-import static nz.ac.auckland.se281.Main.Command.valueOf;
-
 import java.util.ArrayList;
 
 public class VenueHireSystem {
@@ -14,11 +12,6 @@ public class VenueHireSystem {
 
   public VenueHireSystem() {
     this.venues = new ArrayList<Venue>();
-    // For testing
-    // for (int i = 0; i < 15; i++) {
-      // this.venues.add(new Venue("Hello", "FG", 10, 10));
-      // this.venues.add(new Venue("Hello there", "AW", 10, 10));
-    // }
   }
 
   private boolean isVenueCodeUnique(String code) {
@@ -38,11 +31,10 @@ public class VenueHireSystem {
         return venue.getName();
       }
     }
-    return ""; 
+    return "";
   }
 
-
-  private boolean isInt(String s) { 
+  private boolean isInt(String s) {
     try {
       Integer.parseInt(s);
       return true;
@@ -52,29 +44,29 @@ public class VenueHireSystem {
   }
 
   private String getIntString(int n) {
-    String[] strings = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    String[] strings = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
     return strings[n - 1];
   }
-  
+
   private void printVenuesHeading() {
     int totalVenues = this.venues.size();
-    
-    // Accounts for 0 venues 
+
+    // Accounts for 0 venues
     if (totalVenues == 0) {
       MessageCli.NO_VENUES.printMessage();
       return;
-    }    
+    }
 
     String number;
     String connector = "are";
 
     // Accounts for a single venue
-    String plural = "s"; 
+    String plural = "s";
     if (totalVenues == 1) {
       plural = "";
       connector = "is";
-    } 
-    
+    }
+
     // For less than 10
     if (totalVenues < 10) {
       number = this.getIntString(totalVenues);
@@ -102,53 +94,54 @@ public class VenueHireSystem {
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
 
-        // Checks if the venue name is valid
-        venueName = venueName.trim();
-        if (venueName.length() == 0) {
-          System.out.println(MessageCli.VENUE_NOT_CREATED_EMPTY_NAME);
-          return;
-        }
+    // Checks if the venue name is valid
+    venueName = venueName.trim();
+    if (venueName.length() == 0) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+      return;
+    }
 
-        // Checks for venue code uniqueness
-        if (!this.isVenueCodeUnique(venueCode)) {
-          // Not unique, print error message
-          // conflicting venue should not be empty as it exists due to if
-          String conflictingVenue = this.getVenueName(venueCode);
-          System.out.println(MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.getMessage(venueCode, conflictingVenue));
-          return;
-        }
+    // Checks for venue code uniqueness
+    if (!this.isVenueCodeUnique(venueCode)) {
+      // Not unique, print error message
+      // conflicting venue should not be empty as it exists due to if
+      String conflictingVenue = this.getVenueName(venueCode);
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, conflictingVenue);
+      return;
+    }
 
-        // Checks for capacity
-        // First checks for digits
-        if (!this.isInt(capacityInput)) {
-          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("capacity", ""));
-          return;
-        }
-        Integer capacity = Integer.parseInt(capacityInput);
-        // Checks for positive numbers > 0
-        if (capacity <= 0) {
-          // Negative capacity error
-          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("capacity", " positive"));
-          return;
-        }
-        
-        // Checks for valid hire fee
-        if (!this.isInt(hireFeeInput)) {
-          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", ""));
-          return;
-        }
-        Integer hireFee = Integer.parseInt(hireFeeInput);
-        // Checks for positive numbers > 0
-        if (hireFee <= 0) {
-          // Negative hire fee error
-          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", " positive"));
-          return;
-        }
-        Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
-        this.venues.add(venue);
+    // Checks for capacity
+    // First checks for digits
+    if (!this.isInt(capacityInput)) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+      return;
+    }
 
-        MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
-      }
+    Integer capacity = Integer.parseInt(capacityInput);
+    // Checks for positive numbers > 0
+    if (capacity <= 0) {
+      // Negative capacity error
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
+      return;
+    }
+
+    // Checks for valid hire fee
+    if (!this.isInt(hireFeeInput)) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+      return;
+    }
+    Integer hireFee = Integer.parseInt(hireFeeInput);
+    // Checks for positive numbers > 0
+    if (hireFee <= 0) {
+      // Negative hire fee error
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", " positive");
+      return;
+    }
+    Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
+    this.venues.add(venue);
+
+    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
+  }
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
