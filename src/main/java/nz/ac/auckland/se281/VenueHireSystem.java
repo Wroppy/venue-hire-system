@@ -47,10 +47,26 @@ public class VenueHireSystem {
   }
   
   public void printVenues() {
+    int totalVenues = this.venues.size();
+    
     // Accounts for 0 venues 
-    if (this.venues.size() == 0) {
+    if (totalVenues == 0) {
       MessageCli.NO_VENUES.printMessage();
+      return;
     }    
+
+    String number = "1";
+    String connector = "is";
+
+    // Accounts for a single venue
+    String plural = "s";
+    if (totalVenues == 1) {
+      plural = "";
+      connector = "is";
+      number = "one";
+    }
+
+    MessageCli.NUMBER_VENUES.printMessage(connector, number, plural);
   }
 
   public void createVenue(
