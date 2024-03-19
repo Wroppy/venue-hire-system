@@ -35,6 +35,16 @@ public class VenueHireSystem {
     }
     return ""; 
   }
+
+
+  private boolean isInt(String s) { 
+    try {
+      Integer.parseInt(s);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
   
   public void printVenues() {
     // TODO implement this method
@@ -59,7 +69,22 @@ public class VenueHireSystem {
           return;
         }
 
-        // TODO: check for valid capacity and input
+        // Checks for capacity
+        // First checks for digits
+        if (!this.isInt(capacityInput)) {
+          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("capacity", ""));
+          return;
+        }
+        Integer capacity = Integer.parseInt(capacityInput);
+        // Checks for positive numbers > 0
+        if (capacity <= 0) {
+          // Positive capacity error
+          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("capacity", " positive"));
+          return;
+        }
+        
+
+        // TODO: check for valid hire fee
       }
 
   public void setSystemDate(String dateInput) {
