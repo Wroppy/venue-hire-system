@@ -4,11 +4,38 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 import nz.ac.auckland.se281.MessageCli;
+import java.util.ArrayList;
 
 public class VenueHireSystem {
+  private ArrayList<Venue> venues;
 
-  public VenueHireSystem() {}
+  public VenueHireSystem() {
+    this.venues = new ArrayList<Venue>();
+    // For testing
+    // this.venues.add(new Venue("Hello", "FG", 10, 10));
+    // this.venues.add(new Venue("Hello there", "AW", 10, 10));
+  }
 
+  private boolean isVenueCodeUnique(String code) {
+    // Loops through each venue and checks if the code is in use
+    for (Venue venue : this.venues) {
+      if (code.equals(venue.getCode())) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private String getVenueName(String id) {
+    // Returns the venue name associated with the ID
+    for (Venue venue : this.venues) {
+      if (id.equals(venue.getCode())) {
+        return venue.getName();
+      }
+    }
+    return ""; 
+  }
+  
   public void printVenues() {
     // TODO implement this method
   }
@@ -23,7 +50,16 @@ public class VenueHireSystem {
           return;
         }
 
-        // TODO: check for venue code, capacity and input
+        // Checks for venue code uniqueness
+        if (!this.isVenueCodeUnique(venueCode)) {
+          // Not unique, print error message
+          // conflicting venue should not be empty as it exists due to if
+          String conflictingVenue = this.getVenueName(venueCode);
+          System.out.println(MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.getMessage(venueCode, conflictingVenue));
+          return;
+        }
+
+        // TODO: check for valid capacity and input
       }
 
   public void setSystemDate(String dateInput) {
