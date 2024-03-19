@@ -12,8 +12,8 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     this.venues = new ArrayList<Venue>();
     // For testing
-    // this.venues.add(new Venue("Hello", "FG", 10, 10));
-    // this.venues.add(new Venue("Hello there", "AW", 10, 10));
+    this.venues.add(new Venue("Hello", "FG", 10, 10));
+    this.venues.add(new Venue("Hello there", "AW", 10, 10));
   }
 
   private boolean isVenueCodeUnique(String code) {
@@ -78,13 +78,25 @@ public class VenueHireSystem {
         Integer capacity = Integer.parseInt(capacityInput);
         // Checks for positive numbers > 0
         if (capacity <= 0) {
-          // Positive capacity error
+          // Negative capacity error
           System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("capacity", " positive"));
           return;
         }
         
-
-        // TODO: check for valid hire fee
+        // Checks for valid hire fee
+        if (!this.isInt(hireFeeInput)) {
+          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", ""));
+          return;
+        }
+        Integer hireFee = Integer.parseInt(hireFeeInput);
+        // Checks for positive numbers > 0
+        if (hireFee <= 0) {
+          // Negative hire fee error
+          System.out.println(MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", " positive"));
+          return;
+        }
+        Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
+        this.venues.add(venue);
       }
 
   public void setSystemDate(String dateInput) {
