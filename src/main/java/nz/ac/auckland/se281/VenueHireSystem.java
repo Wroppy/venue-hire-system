@@ -4,6 +4,9 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 import nz.ac.auckland.se281.MessageCli;
+
+import static nz.ac.auckland.se281.Main.Command.valueOf;
+
 import java.util.ArrayList;
 
 public class VenueHireSystem {
@@ -12,8 +15,10 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     this.venues = new ArrayList<Venue>();
     // For testing
-    // this.venues.add(new Venue("Hello", "FG", 10, 10));
-    // this.venues.add(new Venue("Hello there", "AW", 10, 10));
+    // for (int i = 0; i < 15; i++) {
+      // this.venues.add(new Venue("Hello", "FG", 10, 10));
+      // this.venues.add(new Venue("Hello there", "AW", 10, 10));
+    // }
   }
 
   private boolean isVenueCodeUnique(String code) {
@@ -51,7 +56,7 @@ public class VenueHireSystem {
     return strings[n - 1];
   }
   
-  public void printVenues() {
+  private void printVenuesHeading() {
     int totalVenues = this.venues.size();
     
     // Accounts for 0 venues 
@@ -78,6 +83,20 @@ public class VenueHireSystem {
     }
 
     MessageCli.NUMBER_VENUES.printMessage(connector, number, plural);
+  }
+
+  public void printVenues() {
+    this.printVenuesHeading();
+
+    String name, code, capacity, fee;
+    // Loops and prints out all venues
+    for (Venue venue : this.venues) {
+      name = venue.getName();
+      code = venue.getCode();
+      capacity = String.valueOf(venue.getCapcity());
+      fee = String.valueOf(venue.getHireFee());
+      MessageCli.VENUE_ENTRY.printMessage(name, code, capacity, fee);
+    }
   }
 
   public void createVenue(
