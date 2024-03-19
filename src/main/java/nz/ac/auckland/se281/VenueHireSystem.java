@@ -45,6 +45,11 @@ public class VenueHireSystem {
       return false;
     }
   }
+
+  private String getIntString(int n) {
+    String[] strings = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    return strings[n - 1];
+  }
   
   public void printVenues() {
     int totalVenues = this.venues.size();
@@ -55,15 +60,21 @@ public class VenueHireSystem {
       return;
     }    
 
-    String number = "1";
-    String connector = "is";
+    String number;
+    String connector = "are";
 
     // Accounts for a single venue
-    String plural = "s";
+    String plural = "s"; 
     if (totalVenues == 1) {
       plural = "";
       connector = "is";
-      number = "one";
+    } 
+    
+    // For less than 10
+    if (totalVenues < 10) {
+      number = this.getIntString(totalVenues);
+    } else {
+      number = String.valueOf(totalVenues);
     }
 
     MessageCli.NUMBER_VENUES.printMessage(connector, number, plural);
