@@ -3,6 +3,8 @@ package nz.ac.auckland.se281;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
+import nz.ac.auckland.se281.MessageCli;
+
 public class VenueHireSystem {
 
   public VenueHireSystem() {}
@@ -13,8 +15,16 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
-  }
+
+        // Checks if the venue name is valid
+        venueName = venueName.trim();
+        if (venueName.length() == 0) {
+          System.out.println(MessageCli.VENUE_NOT_CREATED_EMPTY_NAME);
+          return;
+        }
+
+        // TODO: check for venue code, capacity and input
+      }
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
