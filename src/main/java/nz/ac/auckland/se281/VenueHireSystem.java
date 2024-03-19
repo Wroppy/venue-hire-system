@@ -12,8 +12,8 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     this.venues = new ArrayList<Venue>();
     // For testing
-    this.venues.add(new Venue("Hello", "FG", 10, 10));
-    this.venues.add(new Venue("Hello there", "AW", 10, 10));
+    // this.venues.add(new Venue("Hello", "FG", 10, 10));
+    // this.venues.add(new Venue("Hello there", "AW", 10, 10));
   }
 
   private boolean isVenueCodeUnique(String code) {
@@ -47,7 +47,10 @@ public class VenueHireSystem {
   }
   
   public void printVenues() {
-    // TODO implement this method
+    // Accounts for 0 venues 
+    if (this.venues.size() == 0) {
+      MessageCli.NO_VENUES.printMessage();
+    }    
   }
 
   public void createVenue(
@@ -97,6 +100,8 @@ public class VenueHireSystem {
         }
         Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
         this.venues.add(venue);
+
+        MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
       }
 
   public void setSystemDate(String dateInput) {
