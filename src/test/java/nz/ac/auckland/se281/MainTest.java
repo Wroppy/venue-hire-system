@@ -28,6 +28,13 @@ public class MainTest {
     }
 
     @Test
+    public void T1_custom_negative_hire_fee() throws Exception {
+      runCommands(CREATE_VENUE, "'hello'", "hi", 10, -10);
+
+      assertContains("Venue not created: hire fee must be a positive number.");      
+    }
+
+    @Test
     public void T1_01_no_venues() throws Exception {
       runCommands(PRINT_VENUES);
 

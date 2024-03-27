@@ -143,7 +143,7 @@ public class VenueHireSystem {
     // Checks for positive numbers > 0
     if (hireFee <= 0) {
       // Negative hire fee error
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.getMessage("hire fee", " positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
       return;
     }
     Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
