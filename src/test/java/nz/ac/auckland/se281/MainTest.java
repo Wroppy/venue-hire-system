@@ -311,7 +311,7 @@ public class MainTest {
     }
 
     @Test
-    public void T2_10_booking_next_available_date() throws Exception {
+    public void T2_10_booking_next_available_date_NO_BOOKINGS() throws Exception {
       runCommands(
           unpack(
               CREATE_TEN_VENUES, //

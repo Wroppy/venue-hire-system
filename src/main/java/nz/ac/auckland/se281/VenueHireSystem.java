@@ -87,6 +87,7 @@ public class VenueHireSystem {
     String code;
     String capacity;
     String fee;
+    String nextAvailable;
 
     // Loops and prints out all venues
     for (Venue venue : this.venues) {
@@ -94,7 +95,8 @@ public class VenueHireSystem {
       code = venue.getCode();
       capacity = String.valueOf(venue.getCapcity());
       fee = String.valueOf(venue.getHireFee());
-      MessageCli.VENUE_ENTRY.printMessage(name, code, capacity, fee);
+      nextAvailable = this.getNextAvailableDate(code);
+      MessageCli.VENUE_ENTRY.printMessage(name, code, capacity, fee, nextAvailable);
     }
   }
 
@@ -274,6 +276,26 @@ public class VenueHireSystem {
     String venueName = this.getVenueName(code);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         bookingRef, venueName, dateString, attendeesString);
+  }
+
+  public String getNextAvailableDate(String code) {
+    // Given the venue code, gets the next available date the venue can be booked on.
+    
+    // Gets all the bookings with the code
+    ArrayList<Booking> venueBookings = new ArrayList<>();
+    for (Booking booking : this.bookings) {
+      if (code.equals(booking.getVenueCode())){
+        venueBookings.add(booking);
+      }
+    }
+
+
+    // If there are no bookings, then next available date is today
+    if (venueBookings.size() == 0) {
+      return this.date.toString();
+    }
+
+    return "";
   }
 
   public void printBookings(String venueCode) {
