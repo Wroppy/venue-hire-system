@@ -169,6 +169,8 @@ public class VenueHireSystem {
       System.out.println("Current system date is not set.");
       return;
     }
+
+    MessageCli.CURRENT_DATE.printMessage(this.date.toString());
   }
 
   public void makeBooking(String[] options) {
