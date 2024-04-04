@@ -248,8 +248,6 @@ public class MainTest {
       assertDoesNotContain("Booking not made", true);
     }
 
-
-
     @Test
     public void T2_07_make_booking_venue_already_booked() throws Exception {
       runCommands(
@@ -293,6 +291,21 @@ public class MainTest {
               options("GGG", "28/05/2024", "client999@email.com", "20")));
 
       assertContains("Number of attendees adjusted from 20 to 65, as the venue capacity is 260.");
+      assertContains("Successfully created booking 'HUD14D8O'");
+      assertDoesNotContain("Booking not made", true);
+    }
+
+    @Test
+    public void too_many_attendees() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_NINE_VENUES,
+              SET_DATE,
+              "26/02/2024",
+              MAKE_BOOKING,
+              options("GGG", "28/05/2024", "email", "500")));
+
+      assertContains("Number of attendees adjusted from 500 to 260, as the venue capacity is 260.");
       assertContains("Successfully created booking 'HUD14D8O'");
       assertDoesNotContain("Booking not made", true);
     }

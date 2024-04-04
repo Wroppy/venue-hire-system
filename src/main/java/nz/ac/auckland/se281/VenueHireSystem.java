@@ -195,6 +195,15 @@ public class VenueHireSystem {
     return true;
   }
 
+  private int getVenueCapacity(String code) {
+    for (Venue venue : this.venues) {
+      if (code.equals(venue.getCode())) {
+        return venue.getCapcity();
+      }
+    }
+    return 0;
+  }
+
   public void makeBooking(String[] options) {
     // Checks that the system date is set
     if (!this.isSystemDateSet()) {
@@ -228,7 +237,6 @@ public class VenueHireSystem {
     }
 
     // Checks that the venue is available on the day
-    // TODO Test this
     if (!this.isVenueAvailable(code, bookingDate)) {
       String venueName = this.getVenueName(code);
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
@@ -237,6 +245,25 @@ public class VenueHireSystem {
     }
 
     // TODO Add min and max attendees
+    // Checks that attendees is 25% of the max
+    int capacity = this.getVenueCapacity(code);
+
+    if (attendees < capacity / 4) {
+      String preAttendees = String.valueOf(attendees);
+      String newAttendees = String.valueOf(capacity / 4);
+      String capacityString = String.valueOf(capacity);
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          preAttendees, newAttendees, capacityString);
+      attendees = capacity / 4;
+    } else if (attendees > capacity) {
+      String preAttendees = String.valueOf(attendees);
+      String capacityString = String.valueOf(capacity);
+
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          preAttendees, capacityString, capacityString);
+      attendees = capacity;
+
+    }
 
     // Adds to the list after it passes all checks
     Booking booking = new Booking(code, bookingDate, email, attendees);
