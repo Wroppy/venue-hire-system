@@ -340,10 +340,28 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
+    // TODO check for 0 venues
+
     // Checks that the venue code exists
     if (!this.isVenueCodeUsed(venueCode)) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
     }
+
+    // Gets the bookings
+    ArrayList<Booking> bookings = this.getBookings(venueCode);
+
+    // Prints the heading for the output
+    String venueName = this.getVenueName(venueCode);
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
+
+    // Handles the case for 0 bookings made on the venue
+    if (bookings.size() == 0) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
+      return;
+    }
+
+    // TODO check for multiple bookings
 
   }
 
