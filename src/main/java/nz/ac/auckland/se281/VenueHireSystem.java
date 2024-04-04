@@ -3,13 +3,12 @@ package nz.ac.auckland.se281;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 import nz.ac.auckland.se281.MessageCli;
-
-import java.time.LocalDate;
+import nz.ac.auckland.se281.Date;
 import java.util.ArrayList;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
-  private LocalDate date;
+  private Date date;
 
   public VenueHireSystem() {
     this.venues = new ArrayList<Venue>();
@@ -160,13 +159,16 @@ public class VenueHireSystem {
     int year = Integer.parseInt(dateParams[2]);
 
     // Gets LocalDate instance of specified date
-    this.date = LocalDate.of(year, month, month);
-
+    this.date = new Date(day, month, year);
     MessageCli.DATE_SET.printMessage(dateInput);
   }
 
   public void printSystemDate() {
-    // TODO implement this method
+    // Checks if the date has been set
+    if (this.date == null) {
+      System.out.println("Current system date is not set.");
+      return;
+    }
   }
 
   public void makeBooking(String[] options) {
