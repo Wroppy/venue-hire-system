@@ -56,4 +56,20 @@ public class Date {
   public boolean isDateEqual(Date oDate) {
     return year == oDate.year && month == oDate.month && day == oDate.day;
   }
+
+  public boolean isMonthYearEqual(Date oDate) {
+    return year == oDate.year && month == oDate.month;
+  }
+
+  public int getDay() {
+    return this.day;
+  }
+
+  public int getMonth() {
+    return this.month;
+  }
+
+  public int getYear() {
+    return this.year;
+  }
 }
