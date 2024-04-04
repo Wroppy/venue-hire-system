@@ -6,7 +6,7 @@ public class MusicService extends Service {
   public MusicService() {
     super(500);
   }
-  
+
   @Override
   public String toString() {
     return MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.getMessage(this.getStringCost());

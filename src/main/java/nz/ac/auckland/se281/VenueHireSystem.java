@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
+import nz.ac.auckland.se281.services.MusicService;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
@@ -380,8 +381,19 @@ public class VenueHireSystem {
     return false;
   }
 
+  private Booking getBooking(String bookingRef) {
+    for (Booking booking : this.bookings) {
+      if (!booking.getBookingRef().equals(bookingRef)) {
+        continue;
+      }
+      return booking;
+    }
+
+    return new Booking();
+  }
+
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
+    // TODO: Add catering service
   }
 
   public void addServiceMusic(String bookingReference) {
@@ -389,12 +401,15 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
-    
 
+    // Adds the music service to the booking
+    Booking booking = getBooking(bookingReference);
+    booking.addService(new MusicService());
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    // TODO: Add floral service
   }
 
   public void viewInvoice(String bookingReference) {
