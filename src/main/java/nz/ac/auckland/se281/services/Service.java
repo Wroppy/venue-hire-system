@@ -17,6 +17,8 @@ public abstract class Service {
   @Override
   public abstract String toString();
 
+  public abstract String invoiceString();
+
   public int getCost() {
     return this.cost;
   }

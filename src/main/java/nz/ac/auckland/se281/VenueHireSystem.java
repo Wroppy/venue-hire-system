@@ -404,8 +404,9 @@ public class VenueHireSystem {
 
     // Adds the music service to the booking
     Booking booking = getBooking(bookingReference);
-    booking.addService(new MusicService());
-    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+    MusicService service = new MusicService();
+    booking.addService(service);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service.toString(), bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {

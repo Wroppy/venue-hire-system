@@ -8,7 +8,12 @@ public class MusicService extends Service {
   }
 
   @Override
-  public String toString() {
+  public String invoiceString() {
     return MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.getMessage(this.getStringCost());
+  }
+
+  @Override
+  public String toString() {
+    return "Music";
   }
 }
