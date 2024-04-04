@@ -369,12 +369,28 @@ public class VenueHireSystem {
     }
   }
 
+  // Is booking reference in the system
+  private boolean isBookingRefValid(String bookingRef) {
+    for (Booking booking : this.bookings) {
+      if (!booking.getBookingRef().equals(bookingRef)) {
+        continue;
+      }
+      return true;
+    }
+    return false;
+  }
+
   public void addCateringService(String bookingReference, CateringType cateringType) {
     // TODO implement this method
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    if (!this.isBookingRefValid(bookingReference)) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+      return;
+    }
+    
+
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
