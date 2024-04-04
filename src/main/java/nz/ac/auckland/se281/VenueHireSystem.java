@@ -234,6 +234,17 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
           venueName, bookingDate.toString());
     }
+
+    // TODO Add min and max attendees
+
+    // Adds to the list after it passes all checks
+    Booking booking = new Booking(code, bookingDate, email, attendees);
+    this.bookings.add(booking);
+    String bookingRef = booking.getBookingRef();
+    String attendeesString = String.valueOf(attendees);
+    String dateString = bookingDate.toString();
+    String venueName = this.getVenueName(code);
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookingRef, venueName, dateString, attendeesString);
   }
 
   public void printBookings(String venueCode) {
