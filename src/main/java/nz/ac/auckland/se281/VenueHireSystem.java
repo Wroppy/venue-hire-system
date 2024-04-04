@@ -233,6 +233,7 @@ public class VenueHireSystem {
       String venueName = this.getVenueName(code);
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
           venueName, bookingDate.toString());
+      return;
     }
 
     // TODO Add min and max attendees
@@ -244,7 +245,8 @@ public class VenueHireSystem {
     String attendeesString = String.valueOf(attendees);
     String dateString = bookingDate.toString();
     String venueName = this.getVenueName(code);
-    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookingRef, venueName, dateString, attendeesString);
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+        bookingRef, venueName, dateString, attendeesString);
   }
 
   public void printBookings(String venueCode) {
