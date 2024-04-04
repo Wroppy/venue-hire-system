@@ -31,7 +31,7 @@ public class MainTest {
     public void T1_custom_negative_hire_fee() throws Exception {
       runCommands(CREATE_VENUE, "'hello'", "hi", 10, -10);
 
-      assertContains("Venue not created: hire fee must be a positive number.");      
+      assertContains("Venue not created: hire fee must be a positive number.");
     }
 
     @Test
@@ -202,6 +202,20 @@ public class MainTest {
           options("FFH", "27/02/2024", "client001@email.com", "70"));
 
       assertContains("Booking not made: there are no venues in the system. Create one first.");
+      assertDoesNotContain("Successfully created booking", true);
+    }
+
+    @Test
+    public void venue_code_not_found() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "10/10/2024",
+              MAKE_BOOKING,
+              options("AWD", "27/10/2024", "test@gmail.com", "50")));
+
+      assertContains("Booking not made: there is no venue with code 'AWD'.");
       assertDoesNotContain("Successfully created booking", true);
     }
 

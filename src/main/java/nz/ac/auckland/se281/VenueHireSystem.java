@@ -14,15 +14,15 @@ public class VenueHireSystem {
     this.venues = new ArrayList<Venue>();
   }
 
-  private boolean isVenueCodeUnique(String code) {
+  private boolean isVenueCodeUsed(String code) {
     // Loops through each venue and checks if the code is in use
     // Returns false if one exists, and true otherwise
     for (Venue venue : this.venues) {
       if (code.equals(venue.getCode())) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   private String getVenueName(String id) {
@@ -110,7 +110,7 @@ public class VenueHireSystem {
     }
 
     // Checks for venue code uniqueness
-    if (!this.isVenueCodeUnique(venueCode)) {
+    if (this.isVenueCodeUsed(venueCode)) {
       // Not unique, print error message
       // conflicting venue should not be empty as it exists due to if
       String conflictingVenue = this.getVenueName(venueCode);
@@ -196,6 +196,10 @@ public class VenueHireSystem {
     int attendees = Integer.parseInt(options[3]);    
 
     // TODO Check that the venue code exists
+    if (!this.isVenueCodeUsed(code)) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(code);
+      return;
+    }
 
     // TODO Check that the venue is available on the date
     
