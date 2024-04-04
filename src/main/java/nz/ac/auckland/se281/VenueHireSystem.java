@@ -283,16 +283,20 @@ public class VenueHireSystem {
         bookingRef, venueName, dateString, attendeesString);
   }
 
-  public String getNextAvailableDate(String code) {
+  private ArrayList<Booking> getBookings(String code) {
     // Given the venue code, gets the next available date the venue can be booked on.
-
-    // Gets all the bookings with the code
     ArrayList<Booking> venueBookings = new ArrayList<>();
     for (Booking booking : this.bookings) {
       if (code.equals(booking.getVenueCode())) {
         venueBookings.add(booking);
       }
     }
+    return venueBookings;
+  }
+
+  public String getNextAvailableDate(String code) {
+    // Gets all the bookings with the code
+    ArrayList<Booking> venueBookings = this.getBookings(code);
 
     // If there are no bookings, then next available date is today
     if (venueBookings.size() == 0) {
@@ -336,7 +340,11 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    // Checks that the venue code exists
+    if (!this.isVenueCodeUsed(venueCode)) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+    }
+
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
