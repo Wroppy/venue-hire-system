@@ -157,6 +157,10 @@ public class VenueHireSystem {
     MessageCli.DATE_SET.printMessage(dateInput);
   }
 
+  private boolean isVenuesEmpty() {
+    return this.venues.size() == 0;
+  }
+
   public void printSystemDate() {
     // Checks if the date has been set
     if (!this.isSystemDateSet()) {
@@ -179,7 +183,11 @@ public class VenueHireSystem {
       return;
     }
     
-    // TODO: Check that there is at least 1 venue in the system
+    // Checks that there is at least 1 venue in the system
+    if (this.isVenuesEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
+    }
 
     // Unpacks the options param: [venueCode, date, email, attendees]
     String code = options[0];
