@@ -340,10 +340,9 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    // TODO check for 0 venues
-
+    // Checks for 0 venues
     // Checks that the venue code exists
-    if (!this.isVenueCodeUsed(venueCode)) {
+    if (!this.isVenueCodeUsed(venueCode) || this.venues.size() == 0) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
@@ -361,8 +360,13 @@ public class VenueHireSystem {
       return;
     }
 
-    // TODO check for multiple bookings
+    // Loops through and prints the booking
+    for (Booking booking : bookings) {
+      String bookingDate = booking.getDate().toString();
+      String reference = booking.getBookingRef();
 
+      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(reference, bookingDate);
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
