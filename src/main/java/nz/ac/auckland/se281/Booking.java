@@ -27,4 +27,8 @@ public class Booking {
     return this.venueCode;
   }
 
+  public int getDay() {
+    return this.date.getDay();
+  }
+
 }
