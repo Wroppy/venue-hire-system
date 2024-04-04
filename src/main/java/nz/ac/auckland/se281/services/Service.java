@@ -8,12 +8,6 @@ public abstract class Service {
     this.cost = cost;
   }
 
-  public Service() {}
-
-  protected void setCost(int cost) {
-    this.cost = cost;
-  }
-
   @Override
   public abstract String toString();
 
