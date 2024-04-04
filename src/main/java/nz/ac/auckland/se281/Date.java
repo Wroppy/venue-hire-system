@@ -52,4 +52,8 @@ public class Date {
     // The same date is considered true
     return otherDate.day < this.day;
   }
+
+  public boolean isDateEqual(Date oDate) {
+    return year == oDate.year && month == oDate.month && day == oDate.day;
+  }
 }

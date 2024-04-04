@@ -7,9 +7,10 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
   private Date date;
+  private ArrayList<Booking> bookings = new ArrayList<>();
 
   public VenueHireSystem() {
-    this.venues = new ArrayList<Venue>();
+    this.venues = new ArrayList<>();
   }
 
   private boolean isVenueCodeUsed(String code) {
@@ -174,6 +175,26 @@ public class VenueHireSystem {
     return this.date != null;
   }
 
+  private boolean isVenueAvailable(String code, Date date) {
+    // Loops through all venues and checks if the code is in use and if the date is the same
+    for (Booking booking : this.bookings) {
+      // Code doesn't equal -> goes to next iteration
+      if (!code.equals(booking.getVenueCode())) {
+        continue;
+      }
+
+      // Date doesn't equal -> goes to next iteration
+      if (!date.isDateEqual(booking.getDate())) {
+        continue;
+      }
+
+      // Venue already booked
+      return false;
+    }
+
+    return true;
+  }
+
   public void makeBooking(String[] options) {
     // Checks that the system date is set
     if (!this.isSystemDateSet()) {
@@ -206,7 +227,13 @@ public class VenueHireSystem {
       return;
     }
 
-    // TODO Check that the venue is available on the date
+    // Checks that the venue is available on the day
+    // TODO Test this
+    if (!this.isVenueAvailable(code, bookingDate)) {
+      String venueName = this.getVenueName(code);
+      MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+          venueName, bookingDate.toString());
+    }
   }
 
   public void printBookings(String venueCode) {
