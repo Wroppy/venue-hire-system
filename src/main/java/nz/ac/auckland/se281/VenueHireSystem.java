@@ -152,20 +152,14 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    // Splits the date string into its day, month and year components
-    String[] dateParams = dateInput.split("/");
-    int day = Integer.parseInt(dateParams[0]);
-    int month = Integer.parseInt(dateParams[1]);
-    int year = Integer.parseInt(dateParams[2]);
-
-    // Gets LocalDate instance of specified date
-    this.date = new Date(day, month, year);
+    // Gets Date instance of specified date input
+    this.date = new Date(dateInput);
     MessageCli.DATE_SET.printMessage(dateInput);
   }
 
   public void printSystemDate() {
     // Checks if the date has been set
-    if (this.date == null) {
+    if (!this.isSystemDateSet()) {
       System.out.println("Current system date is not set.");
       return;
     }
@@ -173,8 +167,31 @@ public class VenueHireSystem {
     MessageCli.CURRENT_DATE.printMessage(this.date.toString());
   }
 
+  // Returns true if the date is set
+  private boolean isSystemDateSet() {
+    return this.date != null;
+  }
+
   public void makeBooking(String[] options) {
-    // TODO implement this method
+    // Checks that the system date is set
+    if (!this.isSystemDateSet()) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }
+    
+    // TODO: Check that there is at least 1 venue in the system
+
+    // Unpacks the options param: [venueCode, date, email, attendees]
+    String code = options[0];
+    Date date = new Date(options[1]);
+    String email = options[2];
+    int attendees = Integer.parseInt(options[3]);    
+
+    // TODO Check that the venue code exists
+
+    // TODO Check that the venue is available on the date
+    
+    // TODO Booking date is not in the past (date >= systemDate)
   }
 
   public void printBookings(String venueCode) {
