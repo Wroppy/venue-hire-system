@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -95,7 +97,11 @@ public class VenueHireSystem {
       code = venue.getCode();
       capacity = String.valueOf(venue.getCapcity());
       fee = String.valueOf(venue.getHireFee());
-      nextAvailable = this.getNextAvailableDate(code);
+      try {
+        nextAvailable = this.getNextAvailableDate(code);
+      } catch (Exception e) {
+        nextAvailable = "";
+      }
       MessageCli.VENUE_ENTRY.printMessage(name, code, capacity, fee, nextAvailable);
     }
   }
@@ -264,7 +270,6 @@ public class VenueHireSystem {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
           preAttendees, capacityString, capacityString);
       attendees = capacity;
-
     }
 
     // Adds to the list after it passes all checks
@@ -280,22 +285,54 @@ public class VenueHireSystem {
 
   public String getNextAvailableDate(String code) {
     // Given the venue code, gets the next available date the venue can be booked on.
-    
+
     // Gets all the bookings with the code
     ArrayList<Booking> venueBookings = new ArrayList<>();
     for (Booking booking : this.bookings) {
-      if (code.equals(booking.getVenueCode())){
+      if (code.equals(booking.getVenueCode())) {
         venueBookings.add(booking);
       }
     }
-
 
     // If there are no bookings, then next available date is today
     if (venueBookings.size() == 0) {
       return this.date.toString();
     }
+    // Program constraints state that there will be no overflow onto other months.
+    // Hence only bookings on the same month and year as the system date matter.
+    ArrayList<Booking> validBookings = new ArrayList<>();
+    for (Booking booking : venueBookings) {
+      Date bookingDate = booking.getDate();
 
-    return "";
+      if (!this.date.isMonthYearEqual(bookingDate)) {
+        continue;
+      }
+
+      // Bookings that are passed are not needed
+      if (bookingDate.getDay() < this.date.getDay()) {
+        continue;
+      }
+
+      validBookings.add(booking);
+    }
+
+    // Sorts the list by day from smallest to biggest
+    Comparator<Booking> comparator = Comparator.comparing(Booking::getDay);
+    Collections.sort(validBookings, comparator);
+
+    // Traverses the list to find a gap in the days
+    int smallestDay = this.date.getDay();
+
+    for (Booking booking : validBookings) {
+      // If there is a booking on the current day, to go next
+      if (booking.getDay() == smallestDay) {
+        smallestDay++;
+        continue;
+      }
+      break;
+    }
+
+    return new Date(smallestDay, this.date.getMonth(), this.date.getYear()).toString();
   }
 
   public void printBookings(String venueCode) {

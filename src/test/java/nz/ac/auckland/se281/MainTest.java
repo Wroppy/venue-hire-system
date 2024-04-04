@@ -377,6 +377,67 @@ public class MainTest {
     }
 
     @Test
+    public void five_consecutive_bookings() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "03/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "04/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "05/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "06/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("FFH", "03/02/2024", "client001@email.com", "80"),
+              MAKE_BOOKING,
+              options("FFH", "04/02/2024", "client001@email.com", "80"),
+              MAKE_BOOKING,
+              options("FFH", "05/02/2024", "client001@email.com", "80"),
+              MAKE_BOOKING,
+              options("FFH", "07/02/2024", "client001@email.com", "80"),
+              PRINT_VENUES));
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 06/02/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 07/02/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
+    }
+
+    @Test
+    public void booking_in_future() throws Exception {
+      // The booking is made in the future, so the next available should be the current date
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "07/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "03/05/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
+    }
+
+    @Test
     public void T2_12_print_bookings_venue_not_exist() throws Exception {
       runCommands(
           unpack(
