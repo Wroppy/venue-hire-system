@@ -220,6 +220,19 @@ public class MainTest {
     }
 
     @Test
+    public void date_behind() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "01/05/2024",
+              MAKE_BOOKING,
+              options("MMM", "01/04/2024", "test@email.com", "10")));
+
+      assertContains("Booking not made: '01/04/2024' is in the past (system date is 01/05/2024).");
+    }
+
+    @Test
     public void T2_06_make_booking_venue_found() throws Exception {
       runCommands(
           unpack(
@@ -234,6 +247,8 @@ public class MainTest {
               + " people.");
       assertDoesNotContain("Booking not made", true);
     }
+
+
 
     @Test
     public void T2_07_make_booking_venue_already_booked() throws Exception {

@@ -1,10 +1,8 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
-import nz.ac.auckland.se281.MessageCli;
-import nz.ac.auckland.se281.Date;
-import java.util.ArrayList;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
@@ -47,7 +45,7 @@ public class VenueHireSystem {
 
   private String getIntString(int n) {
     // Gets the string version of an integer
-    String[] strings = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    String[] strings = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     return strings[n - 1];
   }
 
@@ -182,7 +180,7 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
-    
+
     // Checks that there is at least 1 venue in the system
     if (this.isVenuesEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
@@ -191,19 +189,24 @@ public class VenueHireSystem {
 
     // Unpacks the options param: [venueCode, date, email, attendees]
     String code = options[0];
-    Date date = new Date(options[1]);
+    Date bookingDate = new Date(options[1]);
     String email = options[2];
-    int attendees = Integer.parseInt(options[3]);    
+    int attendees = Integer.parseInt(options[3]);
 
-    // TODO Check that the venue code exists
+    // Checks that the venue code exists
     if (!this.isVenueCodeUsed(code)) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(code);
       return;
     }
 
+    // Checks booking date is not in the past (date >= systemDate)
+    if (this.date.isDateBehind(bookingDate)) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(
+          bookingDate.toString(), this.date.toString());
+      return;
+    }
+
     // TODO Check that the venue is available on the date
-    
-    // TODO Booking date is not in the past (date >= systemDate)
   }
 
   public void printBookings(String venueCode) {
