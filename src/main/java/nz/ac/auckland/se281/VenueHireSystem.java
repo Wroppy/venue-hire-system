@@ -6,6 +6,7 @@ import java.util.Comparator;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 import nz.ac.auckland.se281.services.MusicService;
+import nz.ac.auckland.se281.services.CateringService;
 import nz.ac.auckland.se281.services.FloralService;
 
 public class VenueHireSystem {
@@ -398,6 +399,13 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
     }
+
+    // Adds service to the array and prints out message
+    Booking booking = this.getBooking(bookingReference);
+    CateringService service = new CateringService(cateringType, booking.getAttendees());
+    booking.addService(service);
+
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service.toString(), bookingReference);
   }
 
   public void addServiceMusic(String bookingReference) {
