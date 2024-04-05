@@ -15,7 +15,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
   MainTest.Task1.class,
   MainTest.Task2.class,
-  // MainTest.Task3.class,
+  MainTest.Task3.class,
   // MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
@@ -620,6 +620,12 @@ public class MainTest {
       assertContains("* Catering (Breakfast) - $3450");
       assertContains("Total Amount: $4950");
       assertDoesNotContain("not added", true);
+    }
+
+    @Test
+    public void invoice_no_bookings() throws Exception {
+      runCommands(VIEW_INVOICE, "ZP4HRCZ4");
+      assertContains("Invoice not printed: there is no booking with reference 'ZP4HRCZ4' in the system.");
     }
 
     @Test
