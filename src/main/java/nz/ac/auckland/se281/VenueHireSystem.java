@@ -6,6 +6,7 @@ import java.util.Comparator;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 import nz.ac.auckland.se281.services.MusicService;
+import nz.ac.auckland.se281.services.FloralService;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
@@ -415,7 +416,11 @@ public class VenueHireSystem {
       return;
     }
 
-    
+    // Adds the service to the booking
+    Booking booking = this.getBooking(bookingReference);
+    FloralService service = new FloralService(floralType);
+    booking.addService(service);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service.toString(), bookingReference);
   }
 
   public void viewInvoice(String bookingReference) {

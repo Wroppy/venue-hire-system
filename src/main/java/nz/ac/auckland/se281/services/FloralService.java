@@ -8,6 +8,7 @@ public class FloralService extends Service {
 
   public FloralService(FloralType floralType) {
     super(floralType.getCost());
+    this.floralType = floralType;
   }
 
   @Override
