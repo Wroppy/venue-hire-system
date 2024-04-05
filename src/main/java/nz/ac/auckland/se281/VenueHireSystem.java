@@ -275,8 +275,10 @@ public class VenueHireSystem {
       attendees = capacity;
     }
 
+    Date dateOfBooking = new Date(this.date.toString());
+
     // Adds to the list after it passes all checks
-    Booking booking = new Booking(code, bookingDate, email, attendees);
+    Booking booking = new Booking(code, bookingDate, email, attendees, dateOfBooking);
     this.bookings.add(booking);
     String bookingRef = booking.getBookingRef();
     String attendeesString = String.valueOf(attendees);
@@ -394,6 +396,19 @@ public class VenueHireSystem {
     return new Booking();
   }
 
+  private int getVenueHireFee(String code) {
+    for (Venue venue : this.venues) {
+      if (!code.equals(venue.getCode())) {
+        continue;
+      }
+
+      return venue.getHireFee();
+    }
+
+    return 0;
+  }
+
+
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (!this.isBookingRefValid(bookingReference)) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
@@ -440,5 +455,16 @@ public class VenueHireSystem {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
       return;
     }
+
+    Booking booking = this.getBooking(bookingReference);
+
+    // Gets the venue hire fee, and name for the invoice heading
+    int hireFee = this.getVenueHireFee(booking.getVenueCode());
+    String venueName = this.getVenueName(booking.getVenueCode());
+
+    String invoice = booking.getInvoice(venueName, hireFee);
+
+    System.out.println(invoice);
+    
   }
 }
