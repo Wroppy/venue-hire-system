@@ -394,7 +394,10 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO: Add catering service
+    if (!this.isBookingRefValid(bookingReference)) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      return;
+    }
   }
 
   public void addServiceMusic(String bookingReference) {
