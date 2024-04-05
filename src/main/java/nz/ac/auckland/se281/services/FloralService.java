@@ -4,7 +4,7 @@ import nz.ac.auckland.se281.MessageCli;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class FloralService extends Service {
-  FloralType floralType;
+  private FloralType floralType;
 
   public FloralService(FloralType floralType) {
     super(floralType.getCost());

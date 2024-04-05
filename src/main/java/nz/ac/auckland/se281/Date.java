@@ -53,12 +53,12 @@ public class Date {
     return otherDate.day < this.day;
   }
 
-  public boolean isDateEqual(Date oDate) {
-    return year == oDate.year && month == oDate.month && day == oDate.day;
+  public boolean isDateEqual(Date otherDate) {
+    return year == otherDate.year && month == otherDate.month && day == otherDate.day;
   }
 
-  public boolean isMonthYearEqual(Date oDate) {
-    return year == oDate.year && month == oDate.month;
+  public boolean isMonthYearEqual(Date otherDate) {
+    return year == otherDate.year && month == otherDate.month;
   }
 
   public int getDay() {

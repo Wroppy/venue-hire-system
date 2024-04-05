@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
-import nz.ac.auckland.se281.services.MusicService;
 import nz.ac.auckland.se281.services.CateringService;
 import nz.ac.auckland.se281.services.FloralService;
+import nz.ac.auckland.se281.services.MusicService;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues;
@@ -408,7 +408,6 @@ public class VenueHireSystem {
     return 0;
   }
 
-
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (!this.isBookingRefValid(bookingReference)) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
@@ -437,7 +436,7 @@ public class VenueHireSystem {
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    if (!this.isBookingRefValid(bookingReference)){
+    if (!this.isBookingRefValid(bookingReference)) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
     }
@@ -465,6 +464,5 @@ public class VenueHireSystem {
     String invoice = booking.getInvoice(venueName, hireFee);
 
     System.out.println(invoice);
-    
   }
 }
