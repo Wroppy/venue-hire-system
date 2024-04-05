@@ -71,7 +71,15 @@ public class Booking {
             String.valueOf(this.attendees),
             venueName);
 
-    // TODO Add BODY
+    // TODO Add Venue Fee
+    message += "\n" +  MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(venueHireFeeString);
+
+    // TODO Add catering fee
+
+    // TODO Add music fee
+
+    // TODO Add Floral Fee
+    
 
     String totalCostString = String.valueOf(this.getTotalBookingPrice(venueHireFee));
     message += MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage(totalCostString);
