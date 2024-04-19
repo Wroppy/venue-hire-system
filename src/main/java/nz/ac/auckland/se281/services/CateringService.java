@@ -22,5 +22,4 @@ public class CateringService extends Service {
     String cost = this.getStringCost();
     return MessageCli.INVOICE_CONTENT_CATERING_ENTRY.getMessage(cateringName, cost);
   }
-
 }

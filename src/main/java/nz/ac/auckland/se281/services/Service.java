@@ -1,6 +1,5 @@
 package nz.ac.auckland.se281.services;
 
-
 public abstract class Service {
   protected int cost;
 
